@@ -81,7 +81,7 @@ export function getLowestPrice(priceList: PriceHistoryItem[]) {
     }
   }
 
-  return lowestPrice.price;
+  return lowestPrice?.price;
 }
 
 export function getAveragePrice(priceList: PriceHistoryItem[]) {
