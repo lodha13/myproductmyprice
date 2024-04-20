@@ -123,7 +123,7 @@ const Modal = ({ productId }: Props) => {
                       id="myprice"
                       value={myPrice}
                       onChange={(e) => setMyPrice(e.target.value)}
-                      placeholder="Enter price you want to buy"
+                      placeholder="Enter price you want to buy at"
                       className='dialog-input'
                     />
                     </div>
