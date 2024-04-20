@@ -93,7 +93,7 @@ export async function getSimilarProducts(productId: string) {
   }
 }
 
-export async function addUserEmailToProduct(productId: string, userEmail: string) {
+export async function addUserEmailToProduct(productId: string, userEmail: string, userPrice: number) {
   try {
     const product = await Product.findById(productId);
 
@@ -102,13 +102,30 @@ export async function addUserEmailToProduct(productId: string, userEmail: string
     const userExists = product.users.some((user: User) => user.email === userEmail);
 
     if(!userExists) {
-      product.users.push({ email: userEmail });
+      product.users.push({ email: userEmail, myPrice: userPrice });
 
       await product.save();
 
       const emailContent = await generateEmailBody(product, "WELCOME");
 
       await sendEmail(emailContent, [userEmail]);
+    }
+  } catch (error) {
+    console.log(error);
+  }
+}
+export async function deleteUserAlert(product: any, userEmail: string) {
+  try {
+    
+    const userIndex = product.users.findIndex((user : User) => user.email === userEmail);
+    
+    // Check if the user was found in the array
+    if (userIndex !== -1) {
+      // Remove the user from the array
+      product.users.splice(userIndex, 1);
+      
+      // Save the updated product document
+      await product.save();
     }
   } catch (error) {
     console.log(error);

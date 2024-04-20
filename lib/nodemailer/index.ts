@@ -8,6 +8,7 @@ const Notification = {
   CHANGE_OF_STOCK: 'CHANGE_OF_STOCK',
   LOWEST_PRICE: 'LOWEST_PRICE',
   THRESHOLD_MET: 'THRESHOLD_MET',
+  USERPRICE_MET: 'USERPRICE_MET',
 }
 
 export async function generateEmailBody(
@@ -68,6 +69,17 @@ export async function generateEmailBody(
         <div>
           <h4>Hey, ${product.title} is now available at a discount more than ${THRESHOLD_PERCENTAGE}%!</h4>
           <p>Grab it right away from <a href="${product.url}" target="_blank" rel="noopener noreferrer">here</a>.</p>
+        </div>
+      `;
+      break;
+
+    case Notification.USERPRICE_MET:
+      subject = `Discount Alert for ${shortenedTitle}`;
+      body = `
+        <div>
+          <h4>Hey, ${product.title} is now available price you want to buy @ ${product.price} /-</h4>
+          <p>Grab it right away from <a href="${product.url}" target="_blank" rel="noopener noreferrer">here</a>.</p>
+          <p>We are removing the alert, so that you get notified only once. Please track the product again, if you want to be alerted.</p>
         </div>
       `;
       break;

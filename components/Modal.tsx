@@ -13,15 +13,17 @@ const Modal = ({ productId }: Props) => {
   let [isOpen, setIsOpen] = useState(true)
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [email, setEmail] = useState('');
+  const [myPrice, setMyPrice] = useState('');
 
   const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     setIsSubmitting(true);
 
-    await addUserEmailToProduct(productId, email);
+    await addUserEmailToProduct(productId, email, parseInt(myPrice,0));
 
     setIsSubmitting(false)
     setEmail('')
+    setMyPrice('')
     closeModal()
   }
 
@@ -96,9 +98,6 @@ const Modal = ({ productId }: Props) => {
                 </div>
 
                 <form className="flex flex-col mt-5" onSubmit={handleSubmit}>
-                  <label htmlFor="email" className="text-sm font-medium text-gray-700">
-                    Email address
-                  </label>
                   <div className="dialog-input_container">
                     <Image 
                       src="/assets/icons/mail.svg"
@@ -117,6 +116,17 @@ const Modal = ({ productId }: Props) => {
                       className='dialog-input'
                     />
                   </div>
+                  <div className="dialog-input_container">
+                    <input 
+                      required
+                      type="myprice"
+                      id="myprice"
+                      value={myPrice}
+                      onChange={(e) => setMyPrice(e.target.value)}
+                      placeholder="Enter price you want to buy"
+                      className='dialog-input'
+                    />
+                    </div>
 
                   <button type="submit"
                     className="dialog-btn"

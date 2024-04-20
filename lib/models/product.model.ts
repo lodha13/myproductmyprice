@@ -22,7 +22,10 @@ const productSchema = new mongoose.Schema({
   reviewsCount: { type: Number },
   isOutOfStock: { type: Boolean, default: false },
   users: [
-    {email: { type: String, required: true}}
+    {
+      email: { type: String, required: true},
+      myPrice: { type: Number, required: true}
+    }
   ], default: [],
 }, { timestamps: true });
 

@@ -1,10 +1,11 @@
 import { PriceHistoryItem, Product } from "@/types";
 
-const Notification = {
+export const Notification = {
   WELCOME: 'WELCOME',
   CHANGE_OF_STOCK: 'CHANGE_OF_STOCK',
   LOWEST_PRICE: 'LOWEST_PRICE',
   THRESHOLD_MET: 'THRESHOLD_MET',
+  USERPRICE_MET: 'USERPRICE_MET',
 }
 
 const THRESHOLD_PERCENTAGE = 40;
@@ -96,12 +97,16 @@ export const getEmailNotifType = (
   currentProduct: Product
 ) => {
   
-  const lowestPrice = getLowestPrice(currentProduct.priceHistory);
+  var lowestPrice = getLowestPrice(currentProduct.priceHistory);
 
-  if(lowestPrice == scrapedProduct.lowestPrice) {
-    return null;
+  if(lowestPrice === undefined) {
+    lowestPrice = currentProduct.lowestPrice;
   }
 
+  if( lowestPrice == scrapedProduct.lowestPrice) {
+    return null;
+  }
+  
   if (scrapedProduct.currentPrice < lowestPrice) {
     return Notification.LOWEST_PRICE as keyof typeof Notification;
   }
@@ -113,6 +118,7 @@ export const getEmailNotifType = (
   }
 
   return null;
+  
 };
 
 export const formatNumber = (num: number = 0) => {
