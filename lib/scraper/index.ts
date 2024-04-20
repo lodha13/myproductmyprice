@@ -58,7 +58,7 @@ export async function scrapeAmazonProduct(url: string) {
 
     const description = extractDescription($)
 
-    if(url.includes('amazon')){
+    if(url.includes('amazon') && !url.includes(process.env.AMAZON_TAG+'')){
       url=url+process.env.AMAZON_TAG;
     }
 
